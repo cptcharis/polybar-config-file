@@ -1,2 +1,1 @@
-# polybar-config-file
-polybar config file
+This is polybar config file by Ermanno Ferrari
