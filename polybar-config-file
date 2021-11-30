@@ -18,53 +18,52 @@
 
 [colors]
 ;background = ${xrdb:color0:#222}
-background = #331E1E1E
-background-alt = #bf1e1e1e
+background = #33222
+background-alt = #bf444
 ;foreground = ${xrdb:color7:#222}
-foreground = #ffffff
-foreground-alt = #ffffff
-primary = #1b9fc6
-secondary = #ffffff
+foreground = #dfdfdf
+foreground-alt = #555
+primary = #ffb52a
+secondary = #e60053
 alert = #bd2c40
 
 [bar/example]
 ;monitor = ${env:MONITOR:HDMI-1}
 width = 100%
-height = 20
+height = 27
 ;offset-x = 1%
 ;offset-y = 1%
-radius = 0.0
+radius = 6.0
 fixed-center = false
 
 background = ${colors.background}
 foreground = ${colors.foreground}
 
-line-size = 1
-line-color = #00564d
+line-size = 3
+line-color = #f00
 
-border-size = 0
-border-color = #0D00564d
+border-size = 4
+border-color = #00000000
 
 padding-left = 0
-padding-right = 1
+padding-right = 2
 
 module-margin-left = 1
-module-margin-right = 1
+module-margin-right = 2
 
-font-0 = Droid Sans Mono:style=Regular:pixelsize=10;2
-# font-1 = Font Awesome 5 Brands Regular:style=Regular:pixelsize=12;2
-font-1 = unifont:fontformat=truetype:size=14:antialias=false;2
-font-2 = siji:style=Regular:pixelsize=24;2
+font-0 = fixed:pixelsize=10;1
+font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
+font-2 = siji:pixelsize=10;1
 font-3 = Font Awesome 5 Free:pixelsize=12;2
 font-4 = Font Awesome 5 Free Solid:pixelsize=12;2
 font-5 = Font Awesome 5 Brands:pixelsize=12;2
 
-modules-left = bspwm i3
-modules-center = xwindow pacman-updates
-modules-right = spotify filesystem pulseaudio xkeyboard memory cpu wlan eth battery temperature  date powermenu
 
-separator = |
-tray-position = none
+modules-left = i3
+modules-center = xwindow
+modules-right = filesystem xbacklight pulseaudio xkeyboard memory cpu wlan eth battery temperature date powermenu
+
+tray-position = right
 tray-padding = 2
 ;tray-background = #0063ff
 
@@ -80,37 +79,17 @@ tray-padding = 2
 ;scroll-down = i3wm-wsprev
 
 cursor-click = pointer
-eursor-scroll = ns-resize
-
-[module/pacman-updates]
-type = custom/script
-exec = checkupdates | wc -l
-interval = 1000
-label = Updates: %output%
-format.forground = ${colors.foreground}
-format.background = ${colors.backgroun}
-format-prefix = " "
-format-prefix-foreground = #ffbb00
-# format-prefix-background = #ffbb00
+cursor-scroll = ns-resize
 
 [module/xwindow]
 type = internal/xwindow
 label = %title:0:30:...%
-format = <label>
-
-[module/spotify]
-type = custom/script
-interval = 1
-format-prefix = " "
-format = <label>
-exec = python /home/ermanno/.config/scripts/spotify_status.py -f '{artist}: {song}'
-format-underline = #1db954
 
 [module/xkeyboard]
 type = internal/xkeyboard
 blacklist-0 = num lock
 
-format-prefix = " "
+format-prefix = "  "
 format-prefix-foreground = ${colors.foreground-alt}
 format-prefix-underline = ${colors.secondary}
 
@@ -128,7 +107,7 @@ interval = 25
 
 mount-0 = /
 
-label-mounted =  %free%
+label-mounted =   %free%
 label-unmounted = %mountpoint% not mounted
 label-unmounted-foreground = ${colors.foreground-alt}
 
@@ -160,31 +139,26 @@ format = <label-state> <label-mode>
 index-sort = true
 wrapping-scroll = false
 
-
-
 ; Only show workspaces on the same output as the bar
-; pin-workspaces = true
+;pin-workspaces = true
 
-ws-icon-0 = 1;
-ws-icon-1 = 2;
-ws-icon-2 = 3;
-# ws-icon-3 = 4;♝
-# ws-icon-4 = 5;♞
-# ws-icon-default = 
+; Name & sign of working spaces
+ws-icon-0 = "1;"
+ws-icom-1 = "2;"
 
 label-mode-padding = 2
 label-mode-foreground = #000
 label-mode-background = ${colors.primary}
 
 ; focused = Active workspace on focused monitor
-label-focused =%icon%
+label-focused = %icon%
 label-focused-background = ${colors.background-alt}
 label-focused-underline= ${colors.primary}
-label-focused-padding = 1
+label-focused-padding = 2
 
 ; unfocused = Inactive workspace on any monitor
 label-unfocused = %icon%
-label-unfocused-padding = 1
+label-unfocused-padding = 2
 
 ; visible = Active workspace on unfocused monitor
 label-visible = %icon%
@@ -195,8 +169,7 @@ label-visible-padding = ${self.label-focused-padding}
 ; urgent = Workspace with urgency hint set
 label-urgent = %icon%
 label-urgent-background = ${colors.alert}
-label-urgent-padding = 1
-
+label-urgent-padding = 2
 
 ; Separator in between workspaces
 ; label-separator = |
@@ -248,7 +221,7 @@ label = %percentage:2%%
 [module/memory]
 type = internal/memory
 interval = 2
-format-prefix = " "
+format-prefix = "  "
 format-prefix-foreground = ${colors.foreground-alt}
 format-underline = #4bffdc
 label = %percentage_used%%
@@ -277,7 +250,7 @@ ramp-signal-foreground = ${colors.foreground-alt}
 
 [module/eth]
 type = internal/network
-interface = enp1s0
+interface = ens2
 interval = 3.0
 
 format-connected-underline = #55aa55
@@ -293,7 +266,7 @@ format-disconnected =
 
 [module/date]
 type = internal/date
-interval = 1
+interval = 5
 
 date =
 date-alt = " %Y-%m-%d"
@@ -311,10 +284,10 @@ label = %date% %time%
 type = internal/pulseaudio
 
 format-volume = <label-volume> <bar-volume>
-label-volume =  %percentage%%
+label-volume = VOL %percentage%%
 label-volume-foreground = ${root.foreground}
 
-label-muted = 🔇 muted
+label-muted =  muted
 label-muted-foreground = #666
 
 bar-volume-width = 10
@@ -365,7 +338,7 @@ bar-volume-empty-foreground = ${colors.foreground-alt}
 [module/battery]
 type = internal/battery
 battery = BAT0
-adapter = ADP1
+adapter = AC
 full-at = 98
 
 format-charging = <animation-charging> <label-charging>
@@ -374,24 +347,30 @@ format-charging-underline = #ffb52a
 format-discharging = <animation-discharging> <label-discharging>
 format-discharging-underline = ${self.format-charging-underline}
 
-format-full-prefix = " "
+format-full-prefix =
 format-full-prefix-foreground = ${colors.foreground-alt}
 format-full-underline = ${self.format-charging-underline}
 
-ramp-capacity-0 = 
-ramp-capacity-1 = 
-ramp-capacity-2 = 
+ramp-capacity-0 =
+ramp-capacity-1 =
+ramp-capacity-2 =
+ramp-capacity-3 =
+ramp-capacity-4 =
 ramp-capacity-foreground = ${colors.foreground-alt}
 
-animation-charging-0 = 
-animation-charging-1 = 
-animation-charging-2 = 
+animation-charging-0 =
+animation-charging-1 =
+animation-charging-2 =
+animation-charging-3 =
+animation-charging-4 =
 animation-charging-foreground = ${colors.foreground-alt}
 animation-charging-framerate = 750
 
-animation-discharging-0 = 
-animation-discharging-1 = 
-animation-discharging-2 = 
+animation-discharging-0 =
+animation-discharging-1 =
+animation-discharging-2 =
+animation-discharging-3 =
+animation-discharging-4 =
 animation-discharging-foreground = ${colors.foreground-alt}
 animation-discharging-framerate = 750
 
@@ -405,7 +384,7 @@ format-underline = #f50a4d
 format-warn = <ramp> <label-warn>
 format-warn-underline = ${self.format-underline}
 
-label = %temperature-c%
+label =  %temperature-c%
 label-warn = %temperature-c%
 label-warn-foreground = ${colors.secondary}
 
@@ -421,7 +400,7 @@ expand-right = true
 
 format-spacing = 1
 
-label-open = 
+label-open = 
 label-open-foreground = ${colors.secondary}
 label-close =  cancel
 label-close-foreground = ${colors.secondary}
@@ -429,10 +408,19 @@ label-separator = |
 label-separator-foreground = ${colors.foreground-alt}
 
 menu-0-0 = reboot
-menu-0-0-exec = systemctl reboot
+menu-0-0-exec = menu-open-1
 menu-0-1 = power off
-menu-0-1-exec = systemctl poweroff
+menu-0-1-exec = menu-open-2
 
+menu-1-0 = cancel
+menu-1-0-exec = menu-open-0
+menu-1-1 = reboot
+menu-1-1-exec = sudo reboot
+
+menu-2-0 = power off
+menu-2-0-exec = sudo poweroff
+menu-2-1 = cancel
+menu-2-1-exec = menu-open-0
 
 [settings]
 screenchange-reload = true
